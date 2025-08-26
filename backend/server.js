@@ -12,11 +12,23 @@ const cookieParser = require("cookie-parser");
 const app = express();
 
 // Middleware
+const allowedOrigins = [
+  "http://localhost:5173", // local dev
+  "https://techhub-bx2e0hhoz-fidhas-projects-af0c8832.vercel.app" // your deployed frontend
+];
+
 app.use(cors({
-  origin: "http://localhost:5173", // allow frontend
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
+
 app.use(cookieParser());
 
 
