@@ -12,22 +12,24 @@ const cookieParser = require("cookie-parser");
 const app = express();
 
 
-
 const allowedOrigins = [
-  "http://localhost:5173", // local dev
-  "https://techhub-pink-theta.vercel.app" // your live frontend
+  "http://localhost:5173", 
+  /\.vercel\.app$/   // ✅ matches ANY *.vercel.app subdomain
 ];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.some(o => o instanceof RegExp ? o.test(origin) : o === origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true
+  })
+);
+
 
 app.use(cookieParser());
 
