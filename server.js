@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const morgan = require("morgan");
-const topicRoutes = require("./routes/topics");
+const topicRoutes = require("./backend/routes/topics");
 const cookieParser = require("cookie-parser");
 
 
@@ -35,7 +35,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(morgan("dev"));
 app.use("/api/topics", topicRoutes);
-app.use("/api/auth", require("./routes/auth"));
+app.use("/api/auth", require("./backend/routes/auth"));
 
 // Sample route
 app.get("/", (req, res) => {
