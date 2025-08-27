@@ -36,8 +36,8 @@ app.use(cookieParser());
 
 app.use(express.json());
 app.use(morgan("dev"));
-app.use("/api/topics", topicRoutes);
-app.use("/api/auth", require("./backend/routes/auth"));
+app.use("/topics", topicRoutes);
+app.use("/auth", require("./backend/routes/auth"));
 
 // Sample route
 app.get("/", (req, res) => {
